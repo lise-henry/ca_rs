@@ -51,6 +51,8 @@ Une **voiture** est définie essentiellement par cinq nombres :
   ;
 * son *accélération*, qui sert à faire augmenter la vitesse ;
 * son *freinage*, qui sert à diminuer la vitesse ;
+* son *appui aéorodynamique*, qui permet de passer plus vite dans les
+  virages ;
 * sa *carrosserie*, qui correspond à des « points de vie » : si ce
   nombre arrive à zéro, la voiture est hors course. 
   
@@ -183,11 +185,19 @@ elle peut tenter un dépassement. Si une voiture irait plus loin que la
 voiture qui la précède, elle *doit* tenter un dépasssement (voir :
 **dépassements**).
 
-Si une voiture franchit la ligne d'arrivée du dernier tour, elle est
-retirée de la course et termine (1ère, 2ème, ...).
-
 Si une voiture se crashe, elle est retirée de la course et ne termine
 pas. 
+
+### Arrivée (temps au tour)
+
+Pour toutes les voitures qui ont franchi la ligne d'arrivée ce tour
+ci, l'ordre d'arrivée est le suivant :
+
+* la voiture qui est le plus loin après la ligne d'arrivée ;
+* en cas d'égalité, la voiture qui était en tête ce tour-ci
+
+Les voitures qui sont arrivées sont retriées de la course et ont terminé
+
 
 ### Défausse
 
@@ -208,7 +218,7 @@ La partie est terminée lorsque tous les joueurs sont arrivés ou
 ## Virages
 
 Lorsqu'une voiture arrive sur une carte circuit, on compare la vitesse
-de la voiture à la vitesse maximum de la carte circuit. Si elle est
+de la voiture moins son appui aérodynamique à la vitesse maximum de la carte circuit. Si elle est
 égale ou inférieure, il n'y a rien de plus à faire. 
 
 Si elle est supérieure, on regarde la différence (qu'on appelera
@@ -242,6 +252,11 @@ le même que d'habitude : d'abord par pilote le plus avancé sur le
 circuit — donc celui qui bloque –, puis selon le choix du
 joueur).
 
+En ligne droite, le dépassement est automatique si la voiture arrive
+devant (en terme de cases) la voiture précédente. Si on est sur la
+même case on peut tenter de dépasser quand même, dans ce cas les
+règles habituelles s'appliquent.
+
 Pour déterminer si un dépassement est possible, on calcule le score
 suivant : S = vitesse de la voiture qui tente - vitesse de la voiture
 qui bloque + dépassement du pilote qui tente - blocage du pilote qui
@@ -259,7 +274,15 @@ que la voiture précédente, il reste là et c'est tout. Sinon :
   perdent autant de carosserie que ce nombre, et leur vitesse est
   remise à zéro. 
   
-  
+### Accidents
+
+Lorsque la carosserie arrive à zéro, la voiture est éliminée.
+
+Si le score est INFÉRIEUR à zéro, la voiture est éliminée, et le
+joueur perd une carte au hasard de son réservoir par point en dessous
+de zéro (blessure).
+
+Si le score est inférieur à -5, le pilote est tué. 
 
 #### Modificateurs carte pilote
 
@@ -270,4 +293,33 @@ que la voiture précédente, il reste là et c'est tout. Sinon :
   qualificative.
 * Bonne vue : retourne une carte circuit en plus en début de tour.
 * Idem en mauvais.
+* Une liste de cartes qui sont ajoutées au réservoir (positives ou négatives)
+
+#### Temps distance
+
+Un tour représente grosso modo dix secondes.
+
+Une carte circuit représente grosso modo cent mètres.
+
+On peut donner une estimation du temps au tour en regardant :
+
+* le nombre de tours effectués (* 10 pour le nombre de secondes)
+* enlever l'"offset" d'arrivée (le nombre de cases de dépassement de la ligne
+  d'arrivée) divisé par la vitesse, * 10
+* de même ajouter l'offset du tour précédent
+
+On rajoute un nombre aléatoire et pouf on peut faire croire à un temps "précis".
+
+#### Achievements
+
+Allez c'est pas le plus urgent mais juste des idées :
+
+* plus de X accidents
+* plus de X victoires
+* plus de X kilomètres parcourus
+* un pilote mort
+* plus de X pilotes
+* plus de X voitures
+* participer à une course de plus de X tours/cartes
+
 
